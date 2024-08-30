@@ -245,34 +245,7 @@ class urlModal extends Modal {
 					await this.app.vault
 						.create(
 							pathToFile,
-							"# Title" +
-							"\n" +
-							trimString(title) +
-							"\n\n" +
-							"# Authors" +
-							"\n" +
-							trimString(authorString) +
-							"\n\n" +
-							"# URL" +
-							"\n" +
-							semanticScholarURL +
-							"\n\n" +
-							"# Venue" +
-							"\n" +
-							trimString(venue) +
-							"\n\n" +
-							"# Publication date" +
-							"\n" +
-							trimString(publicationDate) +
-							"\n\n" +
-							"# Abstract" +
-							"\n" +
-							trimString(abstract) +
-							"\n\n" +
-							"# Tags" +
-							"\n\n\n" +
-							"# Notes" +
-							"\n"
+							this.format_note(title, authorString, url, publicationDate)
 						)
 						.then(() => {
 							this.app.workspace.openLinkText(
@@ -293,6 +266,15 @@ class urlModal extends Modal {
 			});
 	}
 
+
+	format_note(title: string, author: string, url: string, date: string | null): string {
+		return "---\n" +
+			   `author: ${trimString(author)}\n` + 
+			   `source: ${trimString(url)}\n` + 
+			   `publication_date: ${trimString(date)}\n` + 
+			   "---\n" +
+			   "# " + trimString(title)
+	}
 
 	//if semantic scholar misses, we try arxiv
 	extractFromArxiv(url: string) {
@@ -347,32 +329,7 @@ class urlModal extends Modal {
 					await this.app.vault
 						.create(
 							pathToFile,
-							"# Title" +
-							"\n" +
-							trimString(title) +
-							"\n\n" +
-							"# Authors" +
-							"\n" +
-							trimString(authorString) +
-							"\n\n" +
-							"# URL" +
-							"\n" +
-							trimString(url) +
-							"\n\n" +
-							"# Venue" +
-							"\n\n\n" +
-							"# Publication date" +
-							"\n" +
-							trimString(date) +
-							"\n\n" +
-							"# Abstract" +
-							"\n" +
-							trimString(abstract) +
-							"\n\n" +
-							"# Tags" +
-							"\n\n" +
-							"# Notes" +
-							"\n\n"
+							this.format_note(title, authorString, url, date)
 						)
 						.then(() => {
 							this.app.workspace.openLinkText(
