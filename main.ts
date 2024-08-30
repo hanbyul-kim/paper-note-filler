@@ -267,10 +267,11 @@ class urlModal extends Modal {
 	}
 
 
-	format_note(title: string, author: string, url: string, date: string | null): string {
+	format_note(title: string, author: string, _url: string, date: string | null): string {
+		let url = trimString(_url).replace(/arxiv\.org\/pdf/g, "arxiv.org/abs")	
 		return "---\n" +
 			   `author: ${trimString(author)}\n` + 
-			   `source: ${trimString(url)}\n` + 
+			   `url: ${url}\n` + 
 			   `publication_date: ${trimString(date)}\n` + 
 			   "---\n" +
 			   "# " + trimString(title)
